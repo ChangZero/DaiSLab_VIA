@@ -2,6 +2,7 @@ from distutils.command.upload import upload
 from email.mime import image
 from turtle import title
 from unittest.util import _MAX_LENGTH
+from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
@@ -21,12 +22,17 @@ class PostModel(models.Model):
 
 
 class Photo(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     post = models.ForeignKey(PostModel, on_delete=models.CASCADE, null=True)
-    image = models.ImageField(upload_to='images/', blank=True, null=True)
+    image = models.ImageField(
+        upload_to='images/', validators=[FileExtensionValidator(['png', 'jpg'])], null=True, blank=True)
+
+    def __str__(self):
+        return self.image
 
 
 class File(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     post = models.ForeignKey(PostModel, on_delete=models.CASCADE, null=True)
     metadata = models.FileField(upload_to='files/', blank=True, null=True)
+
+    def __str__(self):
+        return self.metadata
