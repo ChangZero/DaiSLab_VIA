@@ -14,6 +14,11 @@ class PostModel(models.Model):
     # author = models.ForeignKey(User, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
 
+    image = models.ImageField(
+        upload_to='images/', validators=[FileExtensionValidator(['png', 'jpg'])], null=True, blank=True)
+
+    metadata = models.FileField(upload_to='files/', blank=True, null=True)
+
     class Meta:
         ordering = ('-date_created',)
 
@@ -21,18 +26,18 @@ class PostModel(models.Model):
         return self.title
 
 
-class Photo(models.Model):
-    post = models.ForeignKey(PostModel, on_delete=models.CASCADE, null=True)
-    image = models.ImageField(
-        upload_to='images/', validators=[FileExtensionValidator(['png', 'jpg'])], null=True, blank=True)
+# class Photo(models.Model):
+#     post = models.ForeignKey(PostModel, on_delete=models.CASCADE, null=True)
+#     image = models.ImageField(
+#         upload_to='images/', validators=[FileExtensionValidator(['png', 'jpg'])], null=True, blank=True)
 
-    def __str__(self):
-        return self.image
+#     def __str__(self):
+#         return self.image
 
 
-class File(models.Model):
-    post = models.ForeignKey(PostModel, on_delete=models.CASCADE, null=True)
-    metadata = models.FileField(upload_to='files/', blank=True, null=True)
+# class File(models.Model):
+#     post = models.ForeignKey(PostModel, on_delete=models.CASCADE, null=True)
+#     metadata = models.FileField(upload_to='files/', blank=True, null=True)
 
-    def __str__(self):
-        return self.metadata
+    # def __str__(self):
+    #     return self.metadata

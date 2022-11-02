@@ -3,5 +3,7 @@ from . import views
 
 urlpatterns = [
     path('via/', views.viaindex, name='via-index'),
-    path('', views.index, name='myapp-index')
+    path('upload/', views.postupload, name='myapp-upload'),
+    path('index/', views.index, name='myapp-index'),
+    path('index/detail/<int:post_id>/', views.detail, name='myapp-detail'),
 ]
