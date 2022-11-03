@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from myapp.models import PostModel
 from .forms import UploadcontentForm
+from django.core.paginator import Paginator
+
 # Create your views here.
 
 
@@ -25,8 +27,18 @@ def postupload(request):
 
 
 def index(request):
+
+    # 입력인자
+    page = request.GET.get('page', 1)
+
+    # 조회
     posts = PostModel.objects.all()
-    context = {'posts': posts}
+
+    # 페이징처리
+    paginator = Paginator(posts, 10)
+    page_obj = paginator.get_page(page)
+
+    context = {'posts': page_obj}
     return render(request, 'myapp/index.html', context)
 
 

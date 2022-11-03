@@ -1,13 +1,14 @@
 {% extends 'partials/base.html' %}
+{% load static%}
 {% block title %}detail{% endblock%}
-
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
 {% block content %}
     <h1>{{ post.subject }}</h1>
     <div>
         {{ post.content }}
     </div>
     <div class="col-md-4">
-        <img class="img-thumbnail" src="{{ post.image }}" alt="data-img">
+        <img class="img-thumbnail" src="{{ post.image.url }}" alt="data-img">
     </div>
 
 {% endblock %}

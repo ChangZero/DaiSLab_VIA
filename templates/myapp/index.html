@@ -2,17 +2,73 @@
 {% block title %}post_list{% endblock%}
 
 {% block content %}
-    {% if posts %}
-        <ul>
-        {% for post in posts %}
-        <li><a href="detail/{{post.id}}/">
-            {{ post.title }}
-            </a>
+<div class="container my-3">
+    <table class="table">
+        <thead>
+           <tr class="thead-dark">
+            <th>번호</th>
+            <th>제목</th>
+            <th>이미지</th>
+            <th>데이터</th>
+            <th>작성일시</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% if posts %}
+            {% for post in posts %}
+            <tr>
+                <td>{{forloop.counter }}</td>
+                <td><a href="{% url 'myapp-detail' post.id %}">
+                    {{ post.title }}
+                </a>
+                </td>
+                <td>{{ post.image }}</td>
+                <td>{{ post.metadata }}</td>
+                <td>{{ post.date_created }}</td>
+            </tr>
+            {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="4">등록된 포스트가 없습니다.<td>
+        </tr>
+        {% endif %} 
+        </tbody>
+    </table>
+        <!-- 페이징처리 시작 -->
+    <ul class="pagination justify-content-center">
+        <!-- 이전페이지 -->
+        {% if question_list.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ question_list.previous_page_number }}">이전</a>
         </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+        </li>
+        {% endif %}
+        <!-- 페이지리스트 -->
+        {% for page_number in question_list.paginator.page_range %}
+        {% if page_number == question_list.number %}
+        <li class="page-item active" aria-current="page">
+            <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+        </li>
+        {% endif %}
         {% endfor %}
-        </ul>
-    {% else %}
-        <p>Nothing list</p>
-    {% endif %} 
-
+        <!-- 다음페이지 -->
+        {% if question_list.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ question_list.next_page_number }}">다음</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+        </li>
+        {% endif %}
+    </ul>
+    <!-- 페이징처리 끝 -->
+</div>
 {% endblock %}
