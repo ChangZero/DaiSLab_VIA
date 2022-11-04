@@ -46,3 +46,16 @@ def detail(request, post_id):
     post = PostModel.objects.get(id=post_id)
     context = {'post': post}
     return render(request, 'myapp/detail.html', context)
+
+
+def search(request):
+    posts = PostModel.objects.all().order_by('-id')
+
+    q = request.POST.get('q', "")
+
+    if q:
+        posts = posts.filter(title__icontains=q)
+        return render(request, 'myapp/search.html', {'posts': posts, 'q': q})
+
+    else:
+        return render(request, 'myapp/search.html')
