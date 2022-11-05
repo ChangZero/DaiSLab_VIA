@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'myapp.apps.MyappConfig',
+    'users.apps.UsersConfig',
     'crispy_forms',
 ]
 
@@ -117,6 +118,15 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
+
+# django-crispy-form 사용하기 위해 입력 필수!! 사용 부트스르랩에 맞게 설정 필요!
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# 로그인 성공시 리다이렉트되는 화면 설정
+LOGIN_REDIRECT_URL = 'myapp-index'
+
+# 로그인 화면 설정 login_required 쓰기위해선 설정 필요~
+LOGIN_URL = 'users-login'
 
 STATIC_URL = 'static/'
 
