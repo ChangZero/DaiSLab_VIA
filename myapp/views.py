@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from myapp.models import PostModel
 from .forms import UploadcontentForm
 from django.core.paginator import Paginator
-
+from django.db.models import Q
 # Create your views here.
 
 
@@ -30,15 +30,17 @@ def index(request):
 
     # 입력인자
     page = request.GET.get('page', 1)
-
+    q = request.GET.get('q', "")
     # 조회
     posts = PostModel.objects.all()
+    if q:
+        posts = posts.filter(Q(title__icontains=q)).distinct()
 
     # 페이징처리
     paginator = Paginator(posts, 10)
     page_obj = paginator.get_page(page)
+    context = {'posts': page_obj, 'page': page, 'q': q}
 
-    context = {'posts': page_obj}
     return render(request, 'myapp/index.html', context)
 
 
@@ -46,16 +48,3 @@ def detail(request, post_id):
     post = PostModel.objects.get(id=post_id)
     context = {'post': post}
     return render(request, 'myapp/detail.html', context)
-
-
-def search(request):
-    posts = PostModel.objects.all().order_by('-id')
-
-    q = request.POST.get('q', "")
-
-    if q:
-        posts = posts.filter(title__icontains=q)
-        return render(request, 'myapp/search.html', {'posts': posts, 'q': q})
-
-    else:
-        return render(request, 'myapp/search.html')

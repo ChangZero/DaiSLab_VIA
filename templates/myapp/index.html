@@ -1,15 +1,29 @@
 {% extends 'partials/base.html' %}
+{% load filter %}
 {% block title %}post_list{% endblock%}
 {% block content %}
 
 <div class="container my-3">
-    <ul class="search_menu" style=float:right;>
+    {% comment %} <ul class="search_menu" style=float:right;>
         <form class="form-inline my-2 my-lg-0" action="{% url 'myapp-search' %}" method="post">
             {% csrf_token %}
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q" value="{{q}}">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
-    </ul>
+    </ul> {% endcomment %}
+    <div class="row my-3">
+        <div class="col-6">
+            <a href="{% url 'myapp-upload' %}" class="btn btn-primary">파일 업로드</a>
+        </div>
+        <div class="col-6" style=float:right;>
+            <div class="input-group">
+                <input type="text" id="search_q" class="form-control" value="{{ q|default_if_none:'' }}">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" id="btn_search">검색</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <table class="table">
         <thead>
            <tr class="thead-dark">
@@ -24,7 +38,7 @@
         {% if posts %}
             {% for post in posts %}
             <tr>
-                <td>{{forloop.counter }}</td>
+                <td>{{posts.paginator.count|sub:posts.start_index|sub:forloop.counter0|add:1}}</td>
                 <td><a href="{% url 'myapp-detail' post.id %}">
                     {{ post.title }}
                 </a>
@@ -41,44 +55,71 @@
         {% endif %} 
         </tbody>
     </table>
-        <!-- 페이징처리 시작 -->
-    <ul class="pagination justify-content-center">
-        <!-- 이전페이지 -->
-        {% if posts.has_previous %}
-        <li class="page-item">
-            <a class="page-link" href="?page={{ posts.previous_page_number }}">이전</a>
-        </li>
-        {% else %}
-        <li class="page-item disabled">
-            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
-        </li>
-        {% endif %}
-        <!-- 페이지리스트 -->
-        {% for page_number in posts.paginator.page_range %}
-        {% if page_number >= posts.number|add:-5 and page_number <= posts.number|add:5 %}
-        {% if page_number == posts.number %}
-        <li class="page-item active" aria-current="page">
-            <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
-        </li>
-        {% else %}
-        <li class="page-item">
-            <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
-        </li>
-        {% endif %}
-        {% endif %}
-        {% endfor %}
-        <!-- 다음페이지 -->
-        {% if posts.has_next %}
-        <li class="page-item">
-            <a class="page-link" href="?page={{ posts.next_page_number }}">다음</a>
-        </li>
-        {% else %}
-        <li class="page-item disabled">
-            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
-        </li>
-        {% endif %}
-    </ul>
+    <!-- 페이징처리 시작 -->
+<ul class="pagination justify-content-center">
+    <!-- 이전페이지 -->
+    {% if posts.has_previous %}
+    <li class="page-item">
+        <a class="page-link" data-page="{{ posts.previous_page_number }}"
+           href="javascript:void(0)">이전</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+        <a class="page-link" tabindex="-1" aria-disabled="true"
+           href="javascript:void(0)">이전</a>
+    </li>
+    {% endif %}
+    <!-- 페이지리스트 -->
+    {% for page_number in posts.paginator.page_range %}
+    {% if page_number >= posts.number|add:-5 and page_number <= posts.number|add:5 %}
+    {% if page_number == posts.number %}
+    <li class="page-item active" aria-current="page">
+        <a class="page-link" data-page="{{ page_number }}"
+           href="javascript:void(0)">{{ page_number }}</a>
+    </li>
+    {% else %}
+    <li class="page-item">
+        <a class="page-link" data-page="{{ page_number }}"
+           href="javascript:void(0)">{{ page_number }}</a>
+    </li>
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+    <!-- 다음페이지 -->
+    {% if posts.has_next %}
+    <li class="page-item">
+        <a class="page-link" data-page="{{ posts.next_page_number }}"
+           href="javascript:void(0)">다음</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+        <a class="page-link" tabindex="-1" aria-disabled="true"
+           href="javascript:void(0)">다음</a>
+    </li>
+    {% endif %}
+</ul>
 
     <!-- 페이징처리 끝 -->
 </div>
+<form id="searchForm" method="get" action="{% url 'myapp-index' %}">
+    <input type="hidden" id="q" name="q" value="{{ q|default_if_none:'' }}">
+    <input type="hidden" id="page" name="page" value="{{ page }}">
+</form>
+{% endblock %}
+{% block script %}
+<script type='text/javascript'>
+const page_elements = document.getElementsByClassName("page-link");
+Array.from(page_elements).forEach(function(element) {
+    element.addEventListener('click', function() {
+        document.getElementById('page').value = this.dataset.page;
+        document.getElementById('searchForm').submit();
+    });
+});
+const btn_search = document.getElementById("btn_search");
+btn_search.addEventListener('click', function() {
+    document.getElementById('q').value = document.getElementById('search_q').value;
+    document.getElementById('page').value = 1;  // 검색버튼을 클릭할 경우 1페이지부터 조회한다.
+    document.getElementById('searchForm').submit();
+});
+</script>
 {% endblock %}
