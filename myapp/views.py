@@ -16,14 +16,16 @@ def postupload(request):
         # form2 = UploadphotoForm(request.POST or None, request.FILES)
         # form3 = UploadfileForm(request.POST or None, request.FILES)
         if form.is_valid():
-            form.save()
+            form = form.save(commit=False)
+            form.user = request.user
             # form2.save()
             # form3.save()
+            form.save()
             return redirect('myapp-index')
     else:
         form = UploadcontentForm()
 
-    return render(request, 'myapp/upload.html', {'form1': form})
+    return render(request, 'myapp/upload.html', {'form': form})
 
 
 def index(request):
@@ -32,7 +34,8 @@ def index(request):
     page = request.GET.get('page', 1)
     q = request.GET.get('q', "")
     # 조회
-    posts = PostModel.objects.all()
+    logged_in_user = request.user
+    posts = PostModel.objects.filter(user=logged_in_user)
     if q:
         posts = posts.filter(Q(title__icontains=q)).distinct()
 
