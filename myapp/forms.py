@@ -9,6 +9,11 @@ class UploadcontentForm(forms.ModelForm):
         fields = ['title', 'content', 'image', 'metadata']
 
 
+class EditcontentForm(forms.ModelForm):
+    class Meta:
+        model = PostModel
+        fields = ['title', 'content', 'image', 'metadata']
+
 # class UploadphotoForm(forms.ModelForm):
 #     class Meta:
 #         model = Photo

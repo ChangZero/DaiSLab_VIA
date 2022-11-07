@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from myapp.models import PostModel
-from .forms import UploadcontentForm
+from .forms import UploadcontentForm, EditcontentForm
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
@@ -64,3 +64,21 @@ def delete(request, post_id):
         return redirect('myapp-index')
     context = {'post': post}
     return render(request, 'myapp/delete.html', context)
+
+
+@login_required
+def edit(request, post_id):
+    post = get_object_or_404(PostModel, id=post_id)
+    if request.method == 'POST':
+        form = EditcontentForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('myapp-detail', post_id=post_id)
+    else:
+        form = EditcontentForm(instance=post)
+
+    context = {
+        'form': form,
+        # 'post': post,
+    }
+    return render(request, 'myapp/edit.html', context)
