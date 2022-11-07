@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from myapp.models import PostModel
 from .forms import UploadcontentForm
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
@@ -28,6 +29,7 @@ def postupload(request):
     return render(request, 'myapp/upload.html', {'form': form})
 
 
+@login_required
 def index(request):
 
     # 입력인자
@@ -47,7 +49,18 @@ def index(request):
     return render(request, 'myapp/index.html', context)
 
 
+@login_required
 def detail(request, post_id):
     post = PostModel.objects.get(id=post_id)
     context = {'post': post}
     return render(request, 'myapp/detail.html', context)
+
+
+@login_required
+def delete(request, post_id):
+    post = get_object_or_404(PostModel, id=post_id)
+    if request.method == 'POST':
+        post.delete()
+        return redirect('myapp-index')
+    context = {'post': post}
+    return render(request, 'myapp/delete.html', context)
