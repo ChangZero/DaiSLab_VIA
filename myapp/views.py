@@ -4,6 +4,7 @@ from .forms import UploadcontentForm, EditcontentForm
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy
 # Create your views here.
 
 
@@ -11,9 +12,10 @@ def viaindex(request):
     return render(request, 'via/index.html')
 
 
+@login_required
 def postupload(request):
     if request.method == 'POST':
-        form = UploadcontentForm(request.POST or None, request.FILES)
+        form = UploadcontentForm(request.POST, request.FILES)
         # form2 = UploadphotoForm(request.POST or None, request.FILES)
         # form3 = UploadfileForm(request.POST or None, request.FILES)
         if form.is_valid():

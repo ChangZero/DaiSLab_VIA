@@ -10,7 +10,7 @@
                 <div class="card-body">
                     <div class="row">
                         
-                        <div class="col-md-8">
+                        <div class="col">
                             <small>
                                 {{ post.date_created}}
                             </small>
@@ -18,10 +18,13 @@
                                 <span><a class="btn btn-primary mx-2 float-right btn-sm" href="{% url 'myapp-edit' post.id %}">Edit</a></span>
                             <hr>
                             <h4>
-                                {{ post.title }}
+                                제목: {{ post.title }}
                             </h4>
                             <p>
-                                {{ post.content}}
+                                내용: {{ post.content}}
+                            </p>
+                            <p>
+                                파일명: {{ post.metadata.name }}
                             </p>
                             <div class="col-md-4">
                                 <img class="img-thumbnail" src="{{ post.image.url }}" alt="data-img">

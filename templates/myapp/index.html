@@ -43,9 +43,23 @@
                     {{ post.title }}
                 </a>
                 </td>
-                <td>{{ post.image }}</td>
-                <td>{{ post.metadata }}</td>
-                <td>{{ post.date_created }}</td>
+                <td>
+                    {% if post.image %}
+                        <a href="{{ post.image.url }}" download class="btn btn-outline-success">Download Image</a>
+                    {% else %}
+                        <span class="text-muted">No Image</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if post.metadata %}
+                        <a href="{{ post.metadata.url }}" download class="btn btn-outline-success">Download metadata</a>
+                    {% else %}
+                        <span class="text-muted">No Metadata</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {{ post.date_created }}
+                </td>
             </tr>
             {% endfor %}
         {% else %}
