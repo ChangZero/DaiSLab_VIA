@@ -29,6 +29,8 @@ urlpatterns = [
     #      {'document_root': settings.STATIC_ROOT}),
 ]
 
+hander404 = 'users.views.page_not_found'
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)
