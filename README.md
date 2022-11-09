@@ -11,7 +11,8 @@ vgg 연구팀에서 개발한 Vgg Image Annotator(VIA)를 활용하여 메타데
 - via
 - 로그인 기능 (회원가입 기능은 제외함 admin에서 ID를 생성하여 할당하는 방식)
 - CRUD 구현
-- 업로드 파일 검색 기능 구현 
+- 업로드 파일 검색 기능 구현
+- 파일 다운로드 기능 구현
 
 ## License
 BSD-2-Clause
