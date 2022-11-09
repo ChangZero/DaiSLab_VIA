@@ -1,4 +1,24 @@
-# VGG Image Annotator
+# DaisLab Image Annotator Web Application
+
+## 프로젝트 목적 및 용도
+vgg 연구팀에서 개발한 Vgg Image Annotator(VIA)를 활용하여 메타데이터를 생성한다.<br>
+이렇게 생성된 메타데이터들과 원본이미지들을 로컬환경에서 따로 관리할 경우 분실과 회손의 위험이 존재한다.<br>
+따라서 각 기업별로 ID를 할당하여 메타데이터와 이미지들을 파일 업로드 및 유용한 관리를 할 수 있는 웹사이트가 필요하였다.<br>
+상기 프로젝트는 VIA를 프로젝트에 이식하여 해당 웹사이트상에서도 어노테이션을 진행할 수 있게 하였으며 본인 계정을 통해 파일들을 업로드 및 관리할 수 있다.
+최근 제조기업들의 스마트팩토리화가 가속화되고 있는 상황에서 Digital Transformation(DT)는 필수적인 요소가 되었다. 해당 웹은 전통적인 제조 기업과 제조AI기업간의 원활한 DB관리체계를 지원할 것으로 기대된다.
+
+## 구현 기능
+- via
+- 로그인 기능 (회원가입 기능은 제외함 admin에서 ID를 생성하여 할당하는 방식)
+- CRUD 구현
+- 업로드 파일 검색 기능 구현 
+
+## License
+BSD-2-Clause
+
+<hr>
+
+# VGG Image Annotator (외부 리소스)
 
 VGG Image Annotator (VIA) is a simple and standalone manual image annotation 
 software. VIA runs in a web browser and does not require any installation or setup. 
