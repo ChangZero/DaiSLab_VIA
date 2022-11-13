@@ -18,16 +18,39 @@
                                 <span><a class="btn btn-primary mx-2 float-right btn-sm" href="{% url 'myapp-edit' post.id %}">Edit</a></span>
                             <hr>
                             <h4>
-                                제목: {{ post.title }}
+                                {% if post.title %}
+                                    제목: {{ post.title }}
+                                {% else %}
+                                    제목: No title
+                                {% endif %}
                             </h4>
                             <p>
-                                내용: {{ post.content}}
+                                {% if post.content %}
+                                    내용: {{ post.content }}
+                                {% else %}
+                                    내용: No content
+                                {% endif %}
                             </p>
                             <p>
-                                파일명: {{ post.metadata.name }}
+                                {% if post.data %}
+                                    데이터파일명: {{ post.data.name }}
+                                {% else %}
+                                    데이터파일: No file
+                                {% endif %}
+                            </p>
+                            <p>
+                                {% if post.metadata %}
+                                    어노테이션파일명: {{ post.metadata.name }}
+                                {% else %}
+                                    어노테이션파일: No file
+                                {% endif %}
                             </p>
                             <div class="col-md-4">
-                                <img class="img-thumbnail" src="{{ post.image.url }}" alt="data-img">
+                                {% if post.image %}
+                                    <img class="img-thumbnail" src="{{ post.image.url }}" alt="data-img">
+                                {% else %}
+                                    No Image
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -39,17 +62,3 @@
 
 </div>    
 {% endblock content %}
-{% comment %} {% extends 'partials/base.html' %}
-{% load static%}
-{% block title %}detail{% endblock%}
-<link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
-{% block content %}
-    <h1>{{ post.subject }}</h1>
-    <div>
-        {{ post.content }}
-    </div>
-    <div class="col-md-4">
-        <img class="img-thumbnail" src="{{ post.image.url }}" alt="data-img">
-    </div>
-
-{% endblock %} {% endcomment %}

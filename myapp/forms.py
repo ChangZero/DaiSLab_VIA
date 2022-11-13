@@ -6,13 +6,13 @@ from .models import PostModel
 class UploadcontentForm(forms.ModelForm):
     class Meta:
         model = PostModel
-        fields = ['title', 'content', 'image', 'metadata']
+        fields = ['title', 'content', 'image', 'data', 'metadata']
 
 
 class EditcontentForm(forms.ModelForm):
     class Meta:
         model = PostModel
-        fields = ['title', 'content', 'image', 'metadata']
+        fields = ['title', 'content', 'image', 'data', 'metadata']
 
 # class UploadphotoForm(forms.ModelForm):
 #     class Meta:
