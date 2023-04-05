@@ -8,6 +8,7 @@ vgg 연구팀에서 개발한 Vgg Image Annotator(VIA)를 활용하여 메타데
 최근 제조기업들의 스마트팩토리화가 가속화되고 있는 상황에서 Digital Transformation(DT)는 필수적인 요소가 되었다. 해당 웹은 전통적인 제조 기업과 제조AI기업간의 원활한 DB관리체계를 지원할 것으로 기대된다.
 
 ## 구현 기능
+[기능설명](https://laced-pigeon-4b6.notion.site/DaisLab-Image-Annotator-Web-Application-3404c2f98af342bdbb3d9c271a8918ea)
 - via
 - 로그인 기능 (회원가입 기능은 제외함 admin에서 ID를 생성하여 할당하는 방식)
 - CRUD 구현
