@@ -1,4 +1,4 @@
-# DaisLab Image Annotator Web Application
+# DaiSLab Image Annotator Web Application
 
 ## 프로젝트 목적 및 용도
 vgg 연구팀에서 개발한 Vgg Image Annotator(VIA)를 활용하여 메타데이터를 생성한다.<br>
@@ -7,13 +7,95 @@ vgg 연구팀에서 개발한 Vgg Image Annotator(VIA)를 활용하여 메타데
 상기 프로젝트는 VIA를 프로젝트에 이식하여 해당 웹사이트상에서도 어노테이션을 진행할 수 있게 하였으며 본인 계정을 통해 파일들을 업로드 및 관리할 수 있다.
 최근 제조기업들의 스마트팩토리화가 가속화되고 있는 상황에서 Digital Transformation(DT)는 필수적인 요소가 되었다. 해당 웹은 전통적인 제조 기업과 제조AI기업간의 원활한 DB관리체계를 지원할 것으로 기대된다.
 
+## 요구사항 기술
+
+### 1. 기능적 요구사항
+
+via페이지에서 VGG Image Annotator(VIA)를 통해 이미지의 메타데이터를 생성한다.
+
+로그인을 통해 사용자 인증을 한다.
+
+생성한 메타데이터와 원본이미지를 DB에 업로드한다.
+
+업로드한 데이터들은 index페이지에 보여진다. 
+
+사용자가 업로드된 정보의 상세 정보를 볼 수 있도록 한다.
+
+상세정보를 편집 및 삭제 할 수 있도록한다.
+
+사용자가 원하는 데이터를 찾을 수 있도록 검색하도록 한다.
+
+### 2. 비기능적 요구사항
+
+사용자가 업로드한 DB가 안전하게 업로드 및 보관되어야한다.
+
+사용자의 정보 보안유지가 잘 되어야한다.
+
+host의 요청 지연이 불만을 느낄 정도로 생겨서는 안된다.
+
 ## 구현 기능
-[기능설명](https://laced-pigeon-4b6.notion.site/DaisLab-Image-Annotator-Web-Application-3404c2f98af342bdbb3d9c271a8918ea)
-- via
+
+- Annotator
 - 로그인 기능 (회원가입 기능은 제외함 admin에서 ID를 생성하여 할당하는 방식)
 - CRUD 구현
 - 업로드 파일 검색 기능 구현
 - 파일 다운로드 기능 구현
+- 
+### 1. VGG Image Annotator
+![image](https://github.com/ChangZero/DaisLab_VIA/assets/97018869/72ad5405-7ad6-4875-a41a-19908aef760b)
+
+VGG연구팀에서 만든 VIA를 django 프로젝트에 이식하였다. 
+
+### 2. 로그인 기능 구현
+
+![image](https://github.com/ChangZero/DaisLab_VIA/assets/97018869/b875dc20-e35c-491f-b5fd-db5da15920c6)
+
+로그인기능을 구현하여 각 기업별로 파일을 업로드 할 수 있도록 하였다. 
+
+로그인을 하면 유저가 업로드한 파일들이 업로드 날짜 기준으로 정렬되어 나타난다.
+
+![image](https://github.com/ChangZero/DaisLab_VIA/assets/97018869/30327e97-4fa5-4a2f-a551-967f58915f7f)
+
+
+
+### 3. CRUD 구현(Create, Read, Update, Delete)
+
+- Create 기능
+    ![image](https://github.com/ChangZero/DaisLab_VIA/assets/97018869/810658a5-8b62-49cb-96f9-ebe0cd2383ca)
+   
+    Title, Image, Metadata 필드는 반드시 입력(선택)되어야 업로드가 된다. 
+    
+    또한 Image는 jpg, png형식으로 받도록 , Metadata는 csv, json형식으로만 받도록 설정하였다.
+    
+- Read 기능
+    
+    ![image](https://github.com/ChangZero/DaisLab_VIA/assets/97018869/7acba94f-d028-4321-9e3f-2fb33fde999e)
+    
+    index페이지에서 title(제목)을 선택하면 상세한 정보를 확인 할 수 있다. 
+    
+    index페이지에서는 편집(edit)과 삭제(delete)가 지원된다.
+    
+- Update 기능(편집)
+    
+    ![image](https://github.com/ChangZero/DaisLab_VIA/assets/97018869/c2a2fb8b-276c-4918-a9ae-54454a8eb570)
+
+    ![image](https://github.com/ChangZero/DaisLab_VIA/assets/97018869/4fca28a2-1d79-471a-b82c-e53e0941f5d1)
+
+    
+- Delete 기능
+    
+    ![image](https://github.com/ChangZero/DaisLab_VIA/assets/97018869/075f6bc8-fa75-47cd-a1b7-1978b3ca23ea)
+
+    
+
+### 3. 업로드된 파일 검색기능
+
+![image](https://github.com/ChangZero/DaisLab_VIA/assets/97018869/eb4cd27b-588f-4e66-9ea7-91cb12e79c9f)
+
+
+### 4. 파일 다운로드 기능 구현
+
+![image](https://github.com/ChangZero/DaisLab_VIA/assets/97018869/3614a4fe-5b99-4335-b473-4185ee5e9d2c)
 
 ## License
 BSD-2-Clause
